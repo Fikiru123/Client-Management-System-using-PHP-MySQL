@@ -5,18 +5,18 @@ include('includes/dbconnection.php');
 
 if(isset($_POST['login'])) 
   {
-    $username=$_POST['username'];
+    $email=$_POST['email'];
     $password=md5($_POST['password']);
-    $sql ="SELECT ID FROM tbladmin WHERE UserName=:username and Password=:password";
+    $sql ="SELECT ID FROM tblclient WHERE Email=:email and Password=:password";
     $query=$dbh->prepare($sql);
-    $query-> bindParam(':username', $username, PDO::PARAM_STR);
+    $query-> bindParam(':email', $email, PDO::PARAM_STR);
 $query-> bindParam(':password', $password, PDO::PARAM_STR);
     $query-> execute();
     $results=$query->fetchAll(PDO::FETCH_OBJ);
     if($query->rowCount() > 0)
 {
 foreach ($results as $result) {
-$_SESSION['clientmsaid']=$result->ID;
+$_SESSION['clientmsuid']=$result->ID;
 }
 $_SESSION['login']=$_POST['username'];
 echo "<script type='text/javascript'> document.location ='dashboard.php'; </script>";
@@ -50,14 +50,14 @@ echo "<script>alert('Invalid Details');</script>";
 	<div class="error_page">
 
 		<div class="error-top">
-			<h2 class="inner-tittle page">CMS</h2>
+			<h2 class="inner-tittle page">CMS Clients</h2>
 			<div class="login">
 				
 				<div class="buttons login">
 					<h3 class="inner-tittle t-inner" style="color: lightblue">Sign In</h3>
 				</div>
 				<form id="login" method="post" name="login"> 
-					<input type="text" class="text" value="User Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-mail address';}" name="username" required="true">
+					<input type="text" class="text" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-mail address';}" name="email" required="true">
 					<input type="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}" name="password" required="true">
 					<div class="submit"><input type="submit" onclick="myFunction()" value="Login" name="login" ></div>
 					<div class="clearfix"></div>
@@ -65,7 +65,6 @@ echo "<script>alert('Invalid Details');</script>";
 					<div class="new">
 						<p><a href="forgot-password.php">Forgot Password</a></p><br />
 						<p><a href="../index.php">Back Home!!</a></p>
-
 						<div class="clearfix"></div>
 					</div>
 				</form>

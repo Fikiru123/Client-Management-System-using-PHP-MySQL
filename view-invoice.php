@@ -2,7 +2,7 @@
 session_start();
 error_reporting(0);
 include('includes/dbconnection.php');
-if (strlen($_SESSION['clientmsaid']==0)) {
+if (strlen($_SESSION['clientmsuid']==0)) {
   header('location:logout.php');
   } else{
   	?>
@@ -122,10 +122,9 @@ foreach($results as $row1)
 <td><?php echo "$".$subtotal=$row1->ServicePrice?></td>
 </tr>
 
-<?php
+<?php 
 $gtotal+=$subtotal;
- $cnt=$cnt+1;}
-
+$cnt=$cnt+1;}
 } ?>
 
 <tr>
